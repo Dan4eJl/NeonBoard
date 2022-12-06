@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище NeonBoardModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BaseMaterial">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaterialName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PriceForMaterial" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BaseType">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PriceForType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Patronym" Type="nvarchar" MaxLength="20" />
+          <Property Name="Phone" Type="nchar" MaxLength="11" Nullable="false" />
+          <Property Name="Email" Type="nchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="IdOrder" />
+          </Key>
+          <Property Name="IdOrder" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdClient" Type="int" Nullable="false" />
+          <Property Name="IdBoard" Type="int" Nullable="false" />
+          <Property Name="FullPrice" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Signboard">
+          <Key>
+            <PropertyRef Name="IdBoard" />
+          </Key>
+          <Property Name="IdBoard" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Material" Type="int" Nullable="false" />
+          <Property Name="BaseHeight" Type="int" Nullable="false" />
+          <Property Name="BaseWidth" Type="int" Nullable="false" />
+          <Property Name="NeonLength" Type="int" Nullable="false" />
+          <Property Name="CountOfElements" Type="int" Nullable="false" />
+          <Property Name="Sketch" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Order_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Signboard">
+          <End Role="Signboard" Type="Self.Signboard" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Signboard">
+              <PropertyRef Name="IdBoard" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdBoard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Signboard_BaseMaterial">
+          <End Role="BaseMaterial" Type="Self.BaseMaterial" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Signboard" Type="Self.Signboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseMaterial">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="Signboard">
+              <PropertyRef Name="Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Signboard_BaseType">
+          <End Role="BaseType" Type="Self.BaseType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Signboard" Type="Self.Signboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseType">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="Signboard">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище NeonBoardModelContainer">
+          <EntitySet Name="BaseMaterial" EntityType="Self.BaseMaterial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaseType" EntityType="Self.BaseType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Signboard" EntityType="Self.Signboard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Signboard" Association="Self.FK_Order_Signboard">
+            <End Role="Signboard" EntitySet="Signboard" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Signboard_BaseMaterial" Association="Self.FK_Signboard_BaseMaterial">
+            <End Role="BaseMaterial" EntitySet="BaseMaterial" />
+            <End Role="Signboard" EntitySet="Signboard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Signboard_BaseType" Association="Self.FK_Signboard_BaseType">
+            <End Role="BaseType" EntitySet="BaseType" />
+            <End Role="Signboard" EntitySet="Signboard" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NeonBoardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BaseMaterial">
+          <Key>
+            <PropertyRef Name="IdMaterial" />
+          </Key>
+          <Property Name="IdMaterial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaterialName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PriceForMaterial" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Signboard" Relationship="Self.FK_Signboard_BaseMaterial" FromRole="BaseMaterial" ToRole="Signboard" />
+        </EntityType>
+        <EntityType Name="BaseType">
+          <Key>
+            <PropertyRef Name="IdType" />
+          </Key>
+          <Property Name="IdType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PriceForType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Signboard" Relationship="Self.FK_Signboard_BaseType" FromRole="BaseType" ToRole="Signboard" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronym" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order1" Relationship="NeonBoardModel.FK_Order_Client1" FromRole="Client" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="IdOrder" />
+          </Key>
+          <Property Name="IdOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullPrice" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+          <Property Name="IdBoard" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client2" Relationship="NeonBoardModel.FK_Order_Client1" FromRole="Order" ToRole="Client" />
+          <NavigationProperty Name="Signboard1" Relationship="NeonBoardModel.FK_Order_Signboard1" FromRole="Order" ToRole="Signboard" />
+        </EntityType>
+        <EntityType Name="Signboard">
+          <Key>
+            <PropertyRef Name="IdBoard" />
+          </Key>
+          <Property Name="IdBoard" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Material" Type="Int32" Nullable="false" />
+          <Property Name="BaseHeight" Type="Int32" Nullable="false" />
+          <Property Name="BaseWidth" Type="Int32" Nullable="false" />
+          <Property Name="NeonLength" Type="Int32" Nullable="false" />
+          <Property Name="CountOfElements" Type="Int32" Nullable="false" />
+          <Property Name="Sketch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BaseMaterial" Relationship="Self.FK_Signboard_BaseMaterial" FromRole="Signboard" ToRole="BaseMaterial" />
+          <NavigationProperty Name="BaseType" Relationship="Self.FK_Signboard_BaseType" FromRole="Signboard" ToRole="BaseType" />
+          <NavigationProperty Name="Order1" Relationship="NeonBoardModel.FK_Order_Signboard1" FromRole="Signboard" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Signboard_BaseMaterial">
+          <End Role="BaseMaterial" Type="Self.BaseMaterial" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Signboard" Type="Self.Signboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseMaterial">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="Signboard">
+              <PropertyRef Name="Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Signboard_BaseType">
+          <End Role="BaseType" Type="Self.BaseType" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Signboard" Type="Self.Signboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseType">
+              <PropertyRef Name="IdType" />
+            </Principal>
+            <Dependent Role="Signboard">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NeonBoardEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BaseMaterial" EntityType="Self.BaseMaterial" />
+          <EntitySet Name="BaseType" EntityType="Self.BaseType" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="Signboard" EntityType="Self.Signboard" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_Signboard_BaseMaterial" Association="Self.FK_Signboard_BaseMaterial">
+            <End Role="BaseMaterial" EntitySet="BaseMaterial" />
+            <End Role="Signboard" EntitySet="Signboard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Signboard_BaseType" Association="Self.FK_Signboard_BaseType">
+            <End Role="BaseType" EntitySet="BaseType" />
+            <End Role="Signboard" EntitySet="Signboard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Client1" Association="NeonBoardModel.FK_Order_Client1">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Signboard1" Association="NeonBoardModel.FK_Order_Signboard1">
+            <End Role="Signboard" EntitySet="Signboard" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Order_Client1">
+          <End Type="NeonBoardModel.Client" Role="Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NeonBoardModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Signboard1">
+          <End Type="NeonBoardModel.Signboard" Role="Signboard" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="NeonBoardModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Signboard">
+              <PropertyRef Name="IdBoard" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdBoard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище NeonBoardModelContainer" CdmEntityContainer="NeonBoardEntities">
+          <EntitySetMapping Name="BaseMaterial">
+            <EntityTypeMapping TypeName="NeonBoardModel.BaseMaterial">
+              <MappingFragment StoreEntitySet="BaseMaterial">
+                <ScalarProperty Name="IdMaterial" ColumnName="IdMaterial" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="PriceForMaterial" ColumnName="PriceForMaterial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaseType">
+            <EntityTypeMapping TypeName="NeonBoardModel.BaseType">
+              <MappingFragment StoreEntitySet="BaseType">
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="PriceForType" ColumnName="PriceForType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="NeonBoardModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Patronym" ColumnName="Patronym" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="NeonBoardModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="IdBoard" ColumnName="IdBoard" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
+                <ScalarProperty Name="FullPrice" ColumnName="FullPrice" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Signboard">
+            <EntityTypeMapping TypeName="NeonBoardModel.Signboard">
+              <MappingFragment StoreEntitySet="Signboard">
+                <ScalarProperty Name="IdBoard" ColumnName="IdBoard" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="BaseHeight" ColumnName="BaseHeight" />
+                <ScalarProperty Name="BaseWidth" ColumnName="BaseWidth" />
+                <ScalarProperty Name="NeonLength" ColumnName="NeonLength" />
+                <ScalarProperty Name="CountOfElements" ColumnName="CountOfElements" />
+                <ScalarProperty Name="Sketch" ColumnName="Sketch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="NeonBoardModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

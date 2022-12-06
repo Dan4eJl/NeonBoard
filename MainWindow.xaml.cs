@@ -23,6 +23,40 @@ namespace NeonBoard
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new Orders());
+            Manager.MainFrame = MainFrame;
+        }
+
+        private void GoToOrders_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new Orders());
+        }
+
+        private void GoToClients_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new Clients());
+        }
+
+        private void GoToBoards_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new Borders());
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.GoBack();
+        }
+
+        private void MainFrame_ContentRendered(object sender, EventArgs e)
+        {
+            if (Manager.MainFrame.CanGoBack)
+            {
+                Back.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Back.Visibility = Visibility.Hidden;
+            }    
         }
     }
 }

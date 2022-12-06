@@ -1,0 +1,94 @@
+﻿<Page x:Class="NeonBoard.AddPages.AddBoard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:NeonBoard.AddPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AddBoard">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="200*"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="114,0,114,0" Orientation="Horizontal">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,0" Height="280">
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Height="36">
+                    <Label Content="Тип Основания" HorizontalAlignment="Right" FontSize="22" VerticalAlignment="Stretch" FontWeight="Bold"/>
+                    <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="Материал" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
+                    <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="Высота основания" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
+                    <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="39">
+                    <Label Content="Ширина основания" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
+                    <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="Длина неона" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
+                    <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="Количество элементов" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
+                    <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                    <Button x:Name="AddSketchBtn" Content="Эскиз вывески" Height="26" Width="131" FontSize="16" FontWeight="Bold" Background="#FFBAE3EA" BorderBrush="Black" Margin="0,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Width="285" RenderTransformOrigin="0.5,0.5" Height="280">
+
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
+                    <ComboBox x:Name="IdBaseTypeBox" Height="35" BorderBrush="#FF0A0505">
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Color="#FFF0F0F0"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                    </ComboBox>
+
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
+                    <ComboBox x:Name="IdBaseMaterialBox" Height="35" BorderBrush="#FF0A0505">
+                        <ComboBox.Background>
+                            <LinearGradientBrush EndPoint="0,1">
+                                <GradientStop Color="#FFF0F0F0"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </ComboBox.Background>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
+                    <TextBox x:Name="BaseHeightBox" Height="35" BorderBrush="Black" FontSize="20" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
+                    <TextBox x:Name="BaseWidthBox" Height="35" BorderBrush="Black" FontSize="20" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
+                    <TextBox x:Name="NeonLengthBox" Height="35" BorderBrush="Black" FontSize="20" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
+                    <TextBox x:Name="CountOfElementsBox" Height="35" BorderBrush="Black" FontSize="20" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
+                    <Button x:Name="AddOrderBtn" Content="Добавить" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Page>

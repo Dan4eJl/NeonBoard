@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeonBoard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Подсчет неоновых вывесок" Height="450" Width="800">
     <Grid>
-        
+        <Grid Background="#99F4FF"></Grid>
+        <Grid Grid.Column="1" Background="#FF99F4FF"></Grid>
+        <Grid Grid.Row="2" Background="#bae3ea">
+            <StackPanel VerticalAlignment="Top">
+                <StackPanel>
+                    <Button Name ="GoToOrders" Background="#bae3ea" Content="Заказы" Height="40" Click="GoToOrders_Click" FontWeight="Bold" FontSize="18" BorderBrush="Black"/>
+                    <Button Name ="GoToClients" Background="#bae3ea" Content="Клиенты" Height="40" Click="GoToClients_Click" FontWeight="Bold" FontSize="18" BorderBrush="Black"/>
+                    <Button Name ="GoToBoards" Background="#bae3ea" Content="Вывески" Height="40" Click="GoToBoards_Click" FontWeight="Bold" FontSize="18" BorderBrush="Black"/>
+            </StackPanel>
+                
+            </StackPanel>
+            <StackPanel Height="40" VerticalAlignment="Center"/>
+            <StackPanel VerticalAlignment="Bottom">
+                <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                    <Button Name ="Back" Background="#bae3ea" Content="Назад" Height="40" Click="Back_Click" FontWeight="Bold" FontSize="18" BorderBrush="Black"/>
+                    <StackPanel Height="20"/>
+                    <Button Name ="Exit" Background="#bae3ea" Content="Выход" Height="40" FontWeight="Bold" FontSize="18" BorderBrush="Black"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Frame NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered" Grid.Column="1" Name ="MainFrame" Content="" Grid.Row="1"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*" MinHeight="50"/>
+            <RowDefinition Height="260*" MinHeight="260"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*" MinWidth="50"/>
+            <ColumnDefinition Width="70*" MinWidth="350"/>
+
+        </Grid.ColumnDefinitions>
+
+
     </Grid>
 </Window>
