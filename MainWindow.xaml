@@ -5,10 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeonBoard"
         mc:Ignorable="d"
-        Title="Подсчет неоновых вывесок" Height="450" Width="800">
+        Title="Подсчет неоновых вывесок" Height="550" Width="1100" MinHeight="500" MinWidth="1100">
+    
     <Grid>
-        <Grid Background="#99F4FF"></Grid>
-        <Grid Grid.Column="1" Background="#FF99F4FF"></Grid>
+        <Grid Background="#99F4FF">
+            <Image HorizontalAlignment="Center" Height="Auto" VerticalAlignment="Top" Width="Auto" Source="/Resources/Image2.png"/>
+            <Border BorderBrush="Black" BorderThickness="1"/>
+        </Grid>
+        <Grid Grid.Column="1" Background="#FF99F4FF">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="Неоновые вывески" FontSize="40" FontWeight="Bold" FontStyle="Italic" FontFamily="Sitka Text"/>
+            </Border>
+        </Grid>
         <Grid Grid.Row="2" Background="#bae3ea">
             <StackPanel VerticalAlignment="Top">
                 <StackPanel>
@@ -23,9 +31,10 @@
                 <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
                     <Button Name ="Back" Background="#bae3ea" Content="Назад" Height="40" Click="Back_Click" FontWeight="Bold" FontSize="18" BorderBrush="Black"/>
                     <StackPanel Height="20"/>
-                    <Button Name ="Exit" Background="#bae3ea" Content="Выход" Height="40" FontWeight="Bold" FontSize="18" BorderBrush="Black"/>
+                    <Button Name ="Exit" Background="#bae3ea" Content="Выход" Height="40" FontWeight="Bold" FontSize="18" BorderBrush="Black" Click="Exit_Click"/>
                 </StackPanel>
             </StackPanel>
+            <Border BorderBrush="Black" BorderThickness="1"/>
         </Grid>
         <Frame NavigationUIVisibility="Hidden" ContentRendered="MainFrame_ContentRendered" Grid.Column="1" Name ="MainFrame" Content="" Grid.Row="1"/>
         <Grid.RowDefinitions>

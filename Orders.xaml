@@ -4,16 +4,22 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:NeonBoard"
+      
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Orders">
+      Title="Orders" IsVisibleChanged="Page_IsVisibleChanged">
 
+    <Page.Resources>
+        
+        <local:DateConverter x:Key="myDateConverter" />
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
             <RowDefinition Height="90*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Row="0" Name="ListOrders" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center">
+        <ListView Grid.Row="1" Name="ListOrders" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" Width="Auto"/>
@@ -35,30 +41,54 @@
 
                         </Grid.ColumnDefinitions>
                         <TextBlock Text ="{Binding IdOrder, StringFormat={}Заказ №{0} }" FontSize="25" FontWeight="Bold" Width="Auto" Grid.Row="0"></TextBlock>
-                        <TextBlock Text ="{Binding IdClient.Surname, StringFormat={}Клиент: {0}}" FontSize="18" Width="Auto" Grid.Row="1"  HorizontalAlignment="Left" ></TextBlock>
-                        <TextBlock Text ="{Binding StartDate, StringFormat={}Дата принятия заказа: {0} }"  FontSize="16" Width="Auto" Grid.Row="2" HorizontalAlignment="Left"></TextBlock>
-                        <TextBlock Text ="{Binding EndDate, StringFormat={}Дата изготовления заказа: {0}}" FontSize="16" Width="Auto" Grid.Row="3" HorizontalAlignment="Left"></TextBlock>
+                        <TextBlock Text ="{Binding Client.Surname, StringFormat={}Клиент: {0}}" FontSize="18" Width="Auto" Grid.Row="1"  HorizontalAlignment="Left" ></TextBlock>
+                        <TextBlock Text ="{Binding StartDate, Converter={StaticResource myDateConverter}, StringFormat={}Дата принятия заказа: {0} }"  FontSize="16" Width="Auto" Grid.Row="2" HorizontalAlignment="Left"></TextBlock>
+                        <TextBlock Text ="{Binding EndDate, Converter={StaticResource myDateConverter},StringFormat={}Дата изготовления заказа: {0}}" FontSize="16" Width="Auto" Grid.Row="3" HorizontalAlignment="Left"></TextBlock>
                         <TextBlock Text ="{Binding Description, StringFormat={}Дополнительная информация к заказу: {0} }" FontSize="14" Width="Auto" Grid.Row="4" HorizontalAlignment="Left"></TextBlock>
-
-                        <TextBlock Text ="{Binding Board, StringFormat={}ID вывески: {0} }" FontSize="16" Width="Auto" Grid.Row="6" HorizontalAlignment="Right"></TextBlock>
+                        <Image Width="100" Height="100" Grid.Row="5" Stretch="UniformToFill" HorizontalAlignment="Left" Margin="5">
+                            <Image.Source>
+                                <Binding Path="Signboard.Sketch">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            Resources/NoImage.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <TextBlock Text ="{Binding Signboard.IdBoard, StringFormat={}ID вывески: {0} }" FontSize="16" Width="Auto" Grid.Row="6" HorizontalAlignment="Right"></TextBlock>
                         <TextBlock Text ="{Binding FullPrice, StringFormat={}Итоговая стоимость: {0:N2}₽}" FontSize="16" FontWeight="Bold" Width="Auto" Grid.Row="6" HorizontalAlignment="Left"></TextBlock>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <WrapPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+        <WrapPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Label Content="Номер заказа" VerticalAlignment="Center" FontSize="16"/>
-            <TextBox Width="60" Margin="5,0,0,0" Height="25" FontSize="16" Name="FindOrderBox" TextChanged="FindOrderBox_TextChanged"/>
-            <StackPanel Width="30"></StackPanel>
-            <Label Content="Клиент" VerticalAlignment="Center" FontSize="16"/>
-            <TextBox Width="120" Margin="5,0,0,0" Height="25" FontSize="16" Name="FindClientBox" TextChanged="FindClientBox_TextChanged"/>
-            <Label Content="Стоимость" VerticalAlignment="Center" FontSize="16"/>
+                <Label Content="Номер заказа" VerticalAlignment="Center" FontSize="16"/>
+                <TextBox Width="60" Margin="5,0,0,0" Height="25" FontSize="16" Name="FindOrderBox" TextChanged="FindOrderBox_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
+                <StackPanel Width="30"></StackPanel>
+                <Label Content="Клиент" VerticalAlignment="Center" FontSize="16"/>
+                <TextBox Width="110" Margin="5,0,0,0" Height="25" FontSize="16" Name="FindClientBox" TextChanged="FindClientBox_TextChanged" PreviewTextInput="LettersTextBox"/>
+                <Label Content="Стоимость" VerticalAlignment="Center" FontSize="16"/>
                 <ComboBox Name="PriceBox" Width="150" Margin="5,0,0,0" SelectionChanged="PriceBox_SelectionChanged" FontSize="16" IsReadOnly="True">
                     <ComboBoxItem Content="Без сортировки"/>
                     <ComboBoxItem Content="По возрастанию"/>
                     <ComboBoxItem Content="По убыванию"/>
                 </ComboBox>
+            </StackPanel>
+            <StackPanel Width="Auto">
+                <Label Margin="25,0,0,0" Content="Найдено 0 из 9999"  FontSize="16" Name="ResultCount"/>
+            </StackPanel>
+        </WrapPanel>
+        <WrapPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto">
+            <StackPanel Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel  Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Content="Добавить" Name="AddBtn" Margin="15,0,0,0" HorizontalAlignment="Left" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="AddBtn_Click"  />
+                </StackPanel>
+                <StackPanel Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Изменить" Name="EditBtn"  Margin="15,0,0,0" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="EditBtn_Click"  />
+                    <Button Content="Удалить" Name="DeleteBtn" Margin="15,0,0,0" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="DeleteBtn_Click"  />
+                </StackPanel>
             </StackPanel>
         </WrapPanel>
     </Grid>

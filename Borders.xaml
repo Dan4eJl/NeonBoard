@@ -6,14 +6,15 @@
       xmlns:local="clr-namespace:NeonBoard"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Borders">
+      Title="Borders" IsVisibleChanged="Page_IsVisibleChanged">
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
             <RowDefinition Height="90*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Row="0" Name="ListBoard" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center">
+        <ListView Grid.Row="1" Name="ListBoard" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" Width="Auto"/>
@@ -36,27 +37,52 @@
 
                         </Grid.ColumnDefinitions>
                         <TextBlock Text ="{Binding IdBoard, StringFormat={}Вывеска №{0} }" FontSize="25" FontWeight="Bold" Width="Auto" Grid.Row="0"></TextBlock>
-                        <TextBlock Text ="{Binding Type.TypeName, StringFormat={}Тип основания: {0}}" FontSize="18" Width="Auto" Grid.Row="1"  HorizontalAlignment="Left" ></TextBlock>
-                        <TextBlock Text ="{Binding Material.MaterialName, StringFormat={}Материал основания: {0}}"  FontSize="18" Width="Auto" Grid.Row="2" HorizontalAlignment="Left"></TextBlock>
+                        <TextBlock Text ="{Binding BaseType.TypeName, StringFormat={}Тип основания: {0}}" FontSize="18" Width="Auto" Grid.Row="1"  HorizontalAlignment="Left" ></TextBlock>
+                        <TextBlock Text ="{Binding BaseMaterial.MaterialName, StringFormat={}Материал: {0}}"  FontSize="18" Width="Auto" Grid.Row="2" HorizontalAlignment="Left"></TextBlock>
                         <TextBlock Text ="{Binding BaseHeight, StringFormat={}Длина: {0}см}" FontSize="16" Width="Auto" Grid.Row="3" HorizontalAlignment="Left"></TextBlock>
                         <TextBlock Text ="{Binding BaseWidth, StringFormat={}Ширина: {0}см }" FontSize="16" Width="Auto" Grid.Row="3" HorizontalAlignment="Right"></TextBlock>
                         <TextBlock Text ="{Binding NeonLength, StringFormat={}Длина неона: {0}м }" FontSize="16" Width="Auto" Grid.Row="4" HorizontalAlignment="Left"></TextBlock>
-                        <TextBlock Text ="{Binding CountOfElements, StringFormat={}Количество элементов: {0}шт.}" FontSize="16" Width="Auto" Grid.Row="5" HorizontalAlignment="Right"></TextBlock>
+                        <TextBlock Text ="{Binding CountOfElements, StringFormat={}Количество элементов: {0}шт.}" FontSize="16" Width="Auto" Grid.Row="5" HorizontalAlignment="Left"></TextBlock>
+                        <Image Width="100" Height="100" Grid.Row="6" Stretch="UniformToFill" HorizontalAlignment="Center" Margin="5">
+                            <Image.Source>
+                                <Binding Path="Sketch">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            Resources/NoImage.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <WrapPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+        <WrapPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto">
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Label Content="Номер вывески" VerticalAlignment="Center" FontSize="16"/>
-                <TextBox Width="60" Margin="5,0,0,0" Height="25" FontSize="16" Name="FindBoardBox" TextChanged="FindBoardBox_TextChanged"/>
-                <StackPanel Width="30"></StackPanel>
-                <Label Content="Тип основания" VerticalAlignment="Center" FontSize="16"/>
-                <ComboBox Name="TypeBox" Width="150" Margin="5,0,0,0" SelectionChanged="TypeBox_SelectionChanged" FontSize="16" IsReadOnly="True">
+                <TextBox Width="50" Margin="5,0,0,0" Height="25" FontSize="16" Name="FindBoardBox" TextChanged="FindBoardBox_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
+                <StackPanel Width="20"></StackPanel>
+                <Label Content="Основание" VerticalAlignment="Center" FontSize="16"/>
+                <ComboBox DisplayMemberPath="TypeName" Name="TypeBox" Width="120" Margin="5,0,0,0" SelectionChanged="TypeBox_SelectionChanged" FontSize="16" IsReadOnly="True">
                 </ComboBox>
                 <Label Content="Материал" VerticalAlignment="Center" FontSize="16"/>
-                <ComboBox Name="MaterialBox" Width="150" Margin="5,0,0,0" SelectionChanged="MaterialBox_SelectionChanged" FontSize="16" IsReadOnly="True">
+                <ComboBox DisplayMemberPath="MaterialName" Name="MaterialBox" Width="120" Margin="5,0,0,0" SelectionChanged="MaterialBox_SelectionChanged" FontSize="16" IsReadOnly="True">
                 </ComboBox>
+            </StackPanel>
+            <StackPanel>
+                <Label Margin="25,0,0,0" Content="Найдено 0 из 9999"  FontSize="16" Name="ResultCount"/>
+            </StackPanel>
+        </WrapPanel>
+        <WrapPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto">
+            <StackPanel Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel  Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Content="Добавить" Name="AddBtn" Margin="15,0,0,0" HorizontalAlignment="Left" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="AddBtn_Click"  />
+                </StackPanel>
+                <StackPanel Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Изменить" Name="EditBtn"  Margin="15,0,0,0" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="EditBtn_Click"  />
+                    <Button Content="Удалить" Name="DeleteBtn" Margin="15,0,0,0" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="DeleteBtn_Click"  />
+                </StackPanel>
             </StackPanel>
         </WrapPanel>
     </Grid>

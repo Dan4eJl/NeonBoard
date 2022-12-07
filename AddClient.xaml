@@ -29,8 +29,9 @@
                     <Label Content="Имя" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
                     <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
                 </StackPanel>
-                <StackPanel>
-                    <Label Content="Отчетство   " HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="Отчетство" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
+                    <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="39">
                     <Label Content="Номер телефона" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
@@ -44,22 +45,22 @@
             <StackPanel Orientation="Vertical" Width="355" RenderTransformOrigin="0.5,0.5" Height="240">
              
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="SurnameBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding Surname}" MaxLength="30" x:Name="SurnameBox" Height="35" BorderBrush="Black" FontSize="20" PreviewTextInput="LettersTextBox" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="NameBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding Name}" MaxLength="40" x:Name="NameBox" Height="35" BorderBrush="Black" FontSize="20" PreviewTextInput="LettersTextBox" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="PatronymBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding Patronym}" MaxLength="30" x:Name="PatronymBox" Height="35" BorderBrush="Black" FontSize="20" PreviewTextInput="LettersTextBox" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="PhoneBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding Phone}" x:Name="PhoneBox" MaxLength="11" Height="35" BorderBrush="Black" FontSize="20" PreviewTextInput="NumberValidationTextBox" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="MailBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding Email}" x:Name="MailBox" Height="35" BorderBrush="Black" FontSize="20" TextChanged="MailBox_TextChanged" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <Button x:Name="AddClientBtn" Content="Добавить" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black"/>
+                    <Button x:Name="AddClientBtn" Content="Сохранить" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="AddClientBtn_Click"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

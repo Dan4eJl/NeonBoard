@@ -15,14 +15,14 @@ namespace NeonBoard
     public partial class Order
     {
         public int IdOrder { get; set; }
+        public int IdClient { get; set; }
+        public int IdBoard { get; set; }
         public int FullPrice { get; set; }
         public System.DateTime StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string Description { get; set; }
-        public int IdClient { get; set; }
-        public int IdBoard { get; set; }
     
-        public virtual Client Client2 { get; set; }
-        public virtual Signboard Signboard1 { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual Signboard Signboard { get; set; }
     }
 }

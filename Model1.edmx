@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище NeonBoardModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище NeonBoardModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BaseMaterial">
           <Key>
             <PropertyRef Name="IdMaterial" />
@@ -147,7 +147,8 @@
             <End Role="Signboard" EntitySet="Signboard" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NeonBoardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -179,21 +180,21 @@
           <Property Name="Patronym" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Order1" Relationship="NeonBoardModel.FK_Order_Client1" FromRole="Client" ToRole="Order" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Client" FromRole="Client" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="IdOrder" />
           </Key>
           <Property Name="IdOrder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdClient" Type="Int32" Nullable="false" />
+          <Property Name="IdBoard" Type="Int32" Nullable="false" />
           <Property Name="FullPrice" Type="Int32" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IdClient" Type="Int32" Nullable="false" />
-          <Property Name="IdBoard" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Client2" Relationship="NeonBoardModel.FK_Order_Client1" FromRole="Order" ToRole="Client" />
-          <NavigationProperty Name="Signboard1" Relationship="NeonBoardModel.FK_Order_Signboard1" FromRole="Order" ToRole="Signboard" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Order_Client" FromRole="Order" ToRole="Client" />
+          <NavigationProperty Name="Signboard" Relationship="Self.FK_Order_Signboard" FromRole="Order" ToRole="Signboard" />
         </EntityType>
         <EntityType Name="Signboard">
           <Key>
@@ -209,7 +210,7 @@
           <Property Name="Sketch" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BaseMaterial" Relationship="Self.FK_Signboard_BaseMaterial" FromRole="Signboard" ToRole="BaseMaterial" />
           <NavigationProperty Name="BaseType" Relationship="Self.FK_Signboard_BaseType" FromRole="Signboard" ToRole="BaseType" />
-          <NavigationProperty Name="Order1" Relationship="NeonBoardModel.FK_Order_Signboard1" FromRole="Signboard" ToRole="Order" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Signboard" FromRole="Signboard" ToRole="Order" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -249,6 +250,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Order_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Signboard">
+          <End Role="Signboard" Type="Self.Signboard" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Signboard">
+              <PropertyRef Name="IdBoard" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="IdBoard" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="NeonBoardEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BaseMaterial" EntityType="Self.BaseMaterial" />
           <EntitySet Name="BaseType" EntityType="Self.BaseType" />
@@ -264,43 +293,15 @@
             <End Role="BaseType" EntitySet="BaseType" />
             <End Role="Signboard" EntitySet="Signboard" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Client1" Association="NeonBoardModel.FK_Order_Client1">
+          <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
             <End Role="Client" EntitySet="Client" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Signboard1" Association="NeonBoardModel.FK_Order_Signboard1">
+          <AssociationSet Name="FK_Order_Signboard" Association="Self.FK_Order_Signboard">
             <End Role="Signboard" EntitySet="Signboard" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Order_Client1">
-          <End Type="NeonBoardModel.Client" Role="Client" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="NeonBoardModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="IdClient" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="IdClient" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Signboard1">
-          <End Type="NeonBoardModel.Signboard" Role="Signboard" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="NeonBoardModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Signboard">
-              <PropertyRef Name="IdBoard" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="IdBoard" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -340,9 +341,9 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="NeonBoardModel.Order">
               <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="IdBoard" ColumnName="IdBoard" />
-                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
                 <ScalarProperty Name="IdOrder" ColumnName="IdOrder" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="IdBoard" ColumnName="IdBoard" />
                 <ScalarProperty Name="FullPrice" ColumnName="FullPrice" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />

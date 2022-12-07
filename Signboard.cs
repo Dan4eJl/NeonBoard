@@ -17,7 +17,7 @@ namespace NeonBoard
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Signboard()
         {
-            this.Order1 = new HashSet<Order>();
+            this.Order = new HashSet<Order>();
         }
     
         public int IdBoard { get; set; }
@@ -28,10 +28,15 @@ namespace NeonBoard
         public int NeonLength { get; set; }
         public int CountOfElements { get; set; }
         public string Sketch { get; set; }
-    
+        
+        public int PriceForBoard { get; set; }
+        
         public virtual BaseMaterial BaseMaterial { get; set; }
-        public virtual BaseType Type { get; set; }
+        public virtual BaseType BaseType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order1 { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
+
+        
+        
     }
 }

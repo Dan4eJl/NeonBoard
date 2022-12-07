@@ -17,7 +17,7 @@ namespace NeonBoard
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Client()
         {
-            this.Order1 = new HashSet<Order>();
+            this.Order = new HashSet<Order>();
         }
     
         public int IdClient { get; set; }
@@ -28,6 +28,6 @@ namespace NeonBoard
         public string Email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Order1 { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

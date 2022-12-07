@@ -58,5 +58,10 @@ namespace NeonBoard
                 Back.Visibility = Visibility.Hidden;
             }    
         }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

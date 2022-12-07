@@ -47,40 +47,28 @@
             <StackPanel Orientation="Vertical" Width="334" RenderTransformOrigin="0.5,0.5" Height="280">
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <ComboBox x:Name="IdClientBox" Height="35" BorderBrush="#FF0A0505">
-                        <ComboBox.Background>
-                            <LinearGradientBrush EndPoint="0,1">
-                                <GradientStop Color="#FFF0F0F0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </ComboBox.Background>
+                    <ComboBox SelectedItem="{Binding Client}" FontSize="20" DisplayMemberPath="Surname" x:Name="ClientBox" Height="35" BorderBrush="#FF0A0505">
                     </ComboBox>
 
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <ComboBox x:Name="IdBoardBox" Height="35" BorderBrush="#FF0A0505">
-                        <ComboBox.Background>
-                            <LinearGradientBrush EndPoint="0,1">
-                                <GradientStop Color="#FFF0F0F0"/>
-                                <GradientStop Color="White" Offset="1"/>
-                            </LinearGradientBrush>
-                        </ComboBox.Background>
+                    <ComboBox SelectedItem="{Binding Signboard}" FontSize ="20" DisplayMemberPath="IdBoard" x:Name="BoardBox" Height="35" BorderBrush="#FF0A0505" SelectionChanged="BoardBox_SelectionChanged">
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="FullPriceBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="" x:Name="FullPriceBox" Height="35" BorderBrush="Black" FontSize="20" IsEnabled="False" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <DatePicker x:Name="StartDateBox" Background="White" Height="35" BorderBrush="Black" Foreground="Black"/>
+                    <DatePicker SelectedDate="{Binding StartDate}" x:Name="StartDateBox" Background="White" Height="35" BorderBrush="Black" Foreground="Black" FontSize="18" FirstDayOfWeek="Monday"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <DatePicker x:Name="EndDateBox" Background="White" Height="35" BorderBrush="Black" Foreground="Black"/>
+                    <DatePicker SelectedDate ="{Binding EndDate}" x:Name="EndDateBox" Background="White" Height="35" BorderBrush="Black" Foreground="Black" FontSize="18" FirstDayOfWeek="Monday"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="DescriptionBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding Description}" x:Name="DescriptionBox" Height="35" BorderBrush="Black" FontSize="20" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <Button x:Name="AddOrderBtn" Content="Добавить" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black"/>
+                    <Button x:Name="AddOrderBtn" Content="Сохранить" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="AddOrderBtn_Click"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

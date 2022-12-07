@@ -6,15 +6,16 @@
       xmlns:local="clr-namespace:NeonBoard"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Clients">
+      Title="Clients" IsVisibleChanged="Page_IsVisibleChanged">
 
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Row="0" Name="ListClients" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center">
+        <ListView Grid.Row="1" Name="ListClients" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" Width="Auto"/>
@@ -38,11 +39,34 @@
                         <TextBlock Text ="{Binding Patronym, StringFormat={}{0}}" FontSize="20" Width="Auto" Grid.Row="2" HorizontalAlignment="Left"></TextBlock>
                         <TextBlock Text ="{Binding Phone, StringFormat={}Номер телефона: {0} }" FontSize="16" Width="Auto" Grid.Row="3" HorizontalAlignment="Left"></TextBlock>
                         <TextBlock Text ="{Binding Email, StringFormat={}Эл.Почта: {0} }" FontSize="16" Width="Auto" Grid.Row="4" HorizontalAlignment="Right"></TextBlock>
-                        
+
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        <WrapPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Width="Auto">
+                <Label Content="Фамилия" VerticalAlignment="Center" FontSize="16"/>
+                <TextBox Width="100" Margin="5,0,0,0" Height="25" FontSize="16" Name="SurnameBox" TextChanged="SurnameBox_TextChanged" PreviewTextInput="LettersTextBox" />
+                <Label Content="Имя"  Margin="5,0,0,0" VerticalAlignment="Center" FontSize="16"/>
+                <TextBox Width="80" Margin="5,0,0,0" Height="25" FontSize="16" Name="NameBox" TextChanged="NameBox_TextChanged" PreviewTextInput="LettersTextBox" />
+                <Label Content="Отчество"  Margin="5,0,0,0" VerticalAlignment="Center" FontSize="16"/>
+                <TextBox Width="100" Margin="5,0,0,0" Height="25" FontSize="16" Name="PatronymBox" TextChanged="PatronymBox_TextChanged" PreviewTextInput="LettersTextBox" />
+            </StackPanel>
+            <StackPanel Width="Auto">
+                <Label Margin="25,0,0,0" Content="Найдено 0 из 9999"  FontSize="16" Name="ResultCount" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </WrapPanel>
+        <WrapPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto">
+            <StackPanel Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel  Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Content="Добавить" Name="AddBtn" Margin="15,0,0,0" HorizontalAlignment="Left" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="AddBtn_Click"  />
+                </StackPanel>
+                <StackPanel Height="40" Width="Auto" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Изменить" Name="EditBtn"  Margin="15,0,0,0" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="EditBtn_Click"  />
+                    <Button Content="Удалить" Name="DeleteBtn" Margin="15,0,0,0" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="DeleteBtn_Click"  />
+                </StackPanel>
+            </StackPanel>
+        </WrapPanel>
     </Grid>
 </Page>

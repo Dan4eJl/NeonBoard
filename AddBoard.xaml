@@ -8,11 +8,12 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AddBoard">
 
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30*"/>
-            <RowDefinition Height="200*"/>
-            <RowDefinition Height="30*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10*"/>
@@ -20,7 +21,7 @@
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="114,0,114,0" Orientation="Horizontal">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,0" Height="280">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,0,0" Height="320">
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Height="36">
                     <Label Content="Тип Основания" HorizontalAlignment="Right" FontSize="22" VerticalAlignment="Stretch" FontWeight="Bold"/>
                     <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
@@ -45,14 +46,18 @@
                     <Label Content="Количество элементов" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
                     <Label Content="*" HorizontalAlignment="Right" FontSize="22" FontWeight="Bold" Foreground="Red"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-                    <Button x:Name="AddSketchBtn" Content="Эскиз вывески" Height="26" Width="131" FontSize="16" FontWeight="Bold" Background="#FFBAE3EA" BorderBrush="Black" Margin="0,0,0,0"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="Эскиз   " HorizontalAlignment="Right" FontSize="22" FontWeight="Bold"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <TextBlock Text="Cтоимость: " FontSize="20"/>
+                    <TextBlock Text="{Binding PriceForBoard}" Name="PriceForBoardText" FontSize="20"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Vertical" Width="285" RenderTransformOrigin="0.5,0.5" Height="280">
+            <StackPanel Orientation="Vertical" Width="285" RenderTransformOrigin="0.5,0.5" Height="320">
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <ComboBox x:Name="IdBaseTypeBox" Height="35" BorderBrush="#FF0A0505">
+                    <ComboBox FontSize="20" SelectedItem="{Binding BaseType}" x:Name="IdBaseTypeBox" DisplayMemberPath="TypeName" Height="35" BorderBrush="#FF0A0505" SelectionChanged="IdBaseTypeBox_SelectionChanged">
                         <ComboBox.Background>
                             <LinearGradientBrush EndPoint="0,1">
                                 <GradientStop Color="#FFF0F0F0"/>
@@ -63,7 +68,7 @@
 
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <ComboBox x:Name="IdBaseMaterialBox" Height="35" BorderBrush="#FF0A0505">
+                    <ComboBox FontSize="20" SelectedItem ="{Binding BaseMaterial}" x:Name="IdBaseMaterialBox" DisplayMemberPath="MaterialName" Height="35" BorderBrush="#FF0A0505" SelectionChanged="IdBaseMaterialBox_SelectionChanged">
                         <ComboBox.Background>
                             <LinearGradientBrush EndPoint="0,1">
                                 <GradientStop Color="#FFF0F0F0"/>
@@ -73,22 +78,42 @@
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="BaseHeightBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding BaseHeight}" MaxLength="4" x:Name="BaseHeightBox" Height="35" BorderBrush="Black" FontSize="20" TextChanged="BaseHeightBox_TextChanged" MouseLeave="BaseHeightBox_MouseLeave" PreviewTextInput="NumberValidationTextBox" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="BaseWidthBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding BaseWidth}" MaxLength="4" x:Name="BaseWidthBox" Height="35" BorderBrush="Black" FontSize="20" TextChanged="BaseWidthBox_TextChanged" MouseLeave="BaseWidthBox_MouseLeave" PreviewTextInput="NumberValidationTextBox" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="NeonLengthBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text ="{Binding NeonLength}" MaxLength="2" x:Name="NeonLengthBox" Height="35" BorderBrush="Black" FontSize="20" TextChanged="NeonLengthBox_TextChanged" MouseLeave="NeonLengthBox_MouseLeave" PreviewTextInput="NumberValidationTextBox" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <TextBox x:Name="CountOfElementsBox" Height="35" BorderBrush="Black" FontSize="20" />
+                    <TextBox Text="{Binding CountOfElements}" MaxLength="3" x:Name="CountOfElementsBox" Height="35" BorderBrush="Black" FontSize="20" TextChanged="CountOfElementsBox_TextChanged" MouseLeave="CountOfElementsBox_MouseLeave" PreviewTextInput="NumberValidationTextBox" />
                 </StackPanel>
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Height="40">
-                    <Button x:Name="AddOrderBtn" Content="Добавить" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black"/>
+                <StackPanel  Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="40">
+                    <TextBox Text="{Binding Sketch}" x:Name="SketchNameBox" Height="35" BorderBrush="Black" FontSize="20" MouseLeave="CountOfElementsBox_MouseLeave" />
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="40">
+
+                    <TextBlock FontSize="20"/>
+                    <Button Margin="15,0,0,0" x:Name="AddBoardBtn" Content="Сохранить" HorizontalAlignment="Right" Height="39" Width="113" FontSize="20" FontWeight="Bold" Background="#FF99F4FF" BorderBrush="Black" Click="AddBoardBtn_Click"/>
+
+                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+            <Image Name="SketchIm" Stretch="UniformToFill" Grid.Column="2" HorizontalAlignment="Left" Height="100" Margin="5,270,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" ImageFailed="SketchIm_ImageFailed">
+            <Image.Source>
+                <Binding Path="Sketch">
+                    <Binding.TargetNullValue>
+                        <ImageSource>
+                            Resources/NoImage.png
+                        </ImageSource>
+                    </Binding.TargetNullValue>
+                </Binding>
+            </Image.Source>
+        </Image>
             </StackPanel>
         </StackPanel>
+        
 
     </Grid>
 </Page>
