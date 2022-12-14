@@ -50,9 +50,7 @@ namespace NeonBoard
 
             ListOrders.ItemsSource = currentOrders;
 
-            ResultCount.Content = "Найдено " + currentOrders.Count.ToString() + " из " + AllOrders.Count.ToString();
-            
-            
+            ResultCount.Content = "Найдено " + currentOrders.Count.ToString() + " из " + AllOrders.Count.ToString();          
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

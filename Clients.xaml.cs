@@ -74,10 +74,10 @@ namespace NeonBoard
 
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (ListClients.SelectedItem == null)
-                MessageBox.Show("Выберите клиента для изменения.");
+            if (ListClients.SelectedItem == null) // Отслеживание выбранного элемента
+                MessageBox.Show("Выберите клиента для изменения."); 
             else
-                Manager.MainFrame.Navigate(new AddClient(ListClients.SelectedItem as Client));
+                Manager.MainFrame.Navigate(new AddClient(ListClients.SelectedItem as Client)); //Передача данных выбранного клиента на страницу добавления
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
