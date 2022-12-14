@@ -200,6 +200,7 @@ namespace NeonBoard.AddPages
                     BoardPrice += TypePriceBox; // Рублей за вид материала из таблицы материалов
                 }
                 else return false;
+               
                 return true;
 
             }
