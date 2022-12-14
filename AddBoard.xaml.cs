@@ -77,6 +77,7 @@ namespace NeonBoard.AddPages
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+       
         private void BoardPrice()
         {
             int BoardPrice = 0;
@@ -163,6 +164,76 @@ namespace NeonBoard.AddPages
             currentBoard.Sketch = null;
             MessageBox.Show("Запрашиваемого эскиза нет в папке. Проверьте имя и путь.");
             SketchIm.Source = null;
+        }
+        public static bool boardPriceTest(int BaseHeightBox, int BaseWidthBox, int NeonLengthBox, int CountOfElementsBox, int MaterialPriceBox, int TypePriceBox)
+        {
+            try
+            {
+                int BoardPrice = 0;
+                if (BaseHeightBox > 0)
+                {
+                    BoardPrice += BaseHeightBox * 10; // Высотка вывески * Рублей за каждый см
+                }
+                else return false;
+                if (BaseWidthBox > 0)
+                {
+                    BoardPrice += BaseWidthBox * 10; // Ширина вывески * Рублей за каждый см
+                }
+                else return false;
+                if (NeonLengthBox > 0)
+                {
+                    BoardPrice += NeonLengthBox * 50; // Длина неона * Рублей за каждый м
+                }
+                else return false;
+                if (CountOfElementsBox > 0)
+                {
+                    BoardPrice += CountOfElementsBox * 50; // Количество элементов * Рублей за каждый элемент
+                }
+                else return false;
+                if (MaterialPriceBox > 0)
+                {
+                    BoardPrice += MaterialPriceBox; // Рублей за вид материала из таблицы материалов
+                }
+                else return false;
+                if (TypePriceBox > 0)
+                {
+                    BoardPrice += TypePriceBox; // Рублей за вид материала из таблицы материалов
+                }
+                else return false;
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+        public static bool correctAddBoard(int Type, int Material, int Height, int Width, int NeonLength, int CountOfElements, string sketch)
+        {
+            try
+            {
+                Signboard testBoard = new Signboard();
+                
+                testBoard.Type = Type;
+                testBoard.Material = Material;
+                testBoard.BaseHeight = Height;
+                testBoard.BaseWidth = Width;
+                testBoard.NeonLength = NeonLength;
+                testBoard.CountOfElements = CountOfElements;
+                testBoard.Sketch = sketch;
+
+                NeonBoardEntities.GetContext().Signboard.Add(testBoard);
+                NeonBoardEntities.GetContext().SaveChanges();
+                NeonBoardEntities.GetContext().Signboard.Remove(testBoard);
+                NeonBoardEntities.GetContext().SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

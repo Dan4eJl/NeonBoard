@@ -43,6 +43,7 @@ namespace NeonBoard
                 Regex regex = new Regex("[^a-zA-ZА-Яа-я]+");
                 e.Handled = regex.IsMatch(e.Text);
         }
+        
         public bool IsValidEmailAddress(string s)
         {
             Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
@@ -85,6 +86,45 @@ namespace NeonBoard
         private void MailBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ValidMail = IsValidEmailAddress(MailBox.Text);
+        }
+
+        public static bool correctAddClient (string Name, string Surname, string Patronym, string Phone, string Email)
+        {
+            try
+            {
+                Client testClient = new Client();
+                
+                testClient.Name = Name;
+                testClient.Surname = Surname;
+                testClient.Patronym = Patronym;
+                testClient.Phone = Phone;
+                testClient.Email = Email;               
+                NeonBoardEntities.GetContext().Client.Add(testClient);
+                NeonBoardEntities.GetContext().SaveChanges();
+                NeonBoardEntities.GetContext().Client.Remove(testClient);
+                NeonBoardEntities.GetContext().SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public static bool correctLetter(string s)
+        {
+            Regex regex = new Regex("[a-zA-ZА-Яа-я]+");
+            return regex.IsMatch(s);
+        }
+        public static bool correctNumber(string s)
+        {
+            Regex regex = new Regex("[0-9]+");
+            return regex.IsMatch(s);
+        }
+        public static bool correctMail(string s)
+        {
+            Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+            return regex.IsMatch(s);
         }
     }
 }
